@@ -40,4 +40,14 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
-CSRF_TRUSTED_ORIGINS = ['https://asdrones.io']
+# This must be the full URL with the protocol (https)
+CSRF_TRUSTED_ORIGINS = [
+    'https://asdrones.io',
+    'https://www.asdrones.io',
+]
+
+# Also ensure these are set for production
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
