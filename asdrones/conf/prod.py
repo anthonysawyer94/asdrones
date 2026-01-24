@@ -39,3 +39,5 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
+
+CSRF_TRUSTED_ORIGINS = ['https://asdrones.io']

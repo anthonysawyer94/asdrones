@@ -49,3 +49,7 @@ def custom_403(request, exception):
 
 def custom_500(request):
     return render(request, 'main/500.html', status=500)
+
+
+def csrf_failure(request, reason=""):
+    return render(request, 'main/403.html', status=403)
