@@ -1,0 +1,13 @@
+{% load static %}
+{% if not request.GET.embed %}
+  <nav class="main-nav">
+    <div class="nav-container">
+      <a href="{% url 'main:home' %}" class="logo">Drone Services</a>
+      <ul class="nav-links">
+        <li><a href="{% url 'main:home' %}">Home</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+{% endif %}

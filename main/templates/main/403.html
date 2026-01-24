@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>403 - Nope, Bro!</title>
+    <link rel="stylesheet" href="{% static 'hello/css/style.css' %}">
+</head>
+<body>
+    <section class="error-section">
+        <img src="{% static 'images/favicon.png' %}" class="x-logo">
+        <h1>403 - Bro, You Can't Be Here!</h1>
+        <p>Whoa, looks like you tried sneaking into the VIP section without a pass! 😎</p>
+        <p>Chill out and head back to the main party.</p>
+        <a href="{% url 'main_home' %}" class="btn">Take Me Home</a>
+        <p class="small-text">Or, you know, keep trying... but the bouncer's watching. 👀</p>
+    </section>
+</body>
+</html>

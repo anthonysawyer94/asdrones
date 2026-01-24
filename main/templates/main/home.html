@@ -1,0 +1,247 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if debug %}
+        <title>[LOCAL] Drone Services | Construction & Real Estate</title>
+    {% else %}
+        <title>Drone Services | Construction & Real Estate</title>
+        <link rel="icon" href="{% static 'main/images/favicon.png' %}" type="image/png">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'main/css/nav.css' %}">
+    <style>
+        .hero {
+            /* Flexbox for perfect centering */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+            /* Sizing */
+            width: 100%;
+            min-height: 100vh;
+            padding: 0 15px; /* Prevents text hitting edges on mobile */
+
+            /* Background Logic */
+            /* This adds a subtle dark tint (40% opacity) so white text pops */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('{% static "main/images/drone/kauai.JPG" %}');
+            
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+            
+            /* Modern text styling */
+            color: white;
+        }
+
+        /* Add spacing between the elements inside the hero */
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); /* extra safety for readability */
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem; /* Creates the "nice spacing" to the button */
+            max-width: 800px;
+        }
+
+        /* The "Get a Quote" Button */
+        .hero .btn-quote {
+            padding: 12px 30px;
+            background-color: #ff9800; /* Use your brand color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+
+        .hero .btn-quote:hover {
+            transform: scale(1.05);
+        }
+        .services { padding: 50px 10%; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .service-card { border: 1px solid #ddd; padding: 20px; border-radius: 8px; text-align: center; }
+        .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 20px; background-color: #4f4d4d;}
+        .gallery img { width: 75%; height: 100%; border-radius: 5px; border: solid}
+
+        .services {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 4rem 2rem;
+            flex-wrap: wrap;
+            background-color: #0a0a0a; /* Dark background */
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05); /* Semi-transparent */
+            backdrop-filter: blur(12px); /* The "Glass" effect */
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2.5rem;
+            width: 300px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px); /* Lifts the card up */
+            border-color: #ff8c00; /* Subtle orange glow on hover */
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.2);
+        }
+
+        .service-card h3 {
+            color: #ff8c00; /* Professional Orange Accent */
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-card p {
+            color: #cccccc;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+    </style>
+</head>
+<body>
+    {% include 'main/partials/nav.html' %}
+    <header class="hero">
+        <h1>Comprehensive Site Intelligence from Above</h1>
+        <p>Specializing in Construction Progress & Aerial Inspections</p>
+        <a href="#contact" style="background: orange; padding: 10px 20px; text-decoration: none; color: white; border-radius: 5px;">Get a Quote</a>
+    </header>
+
+    <section class="services">
+        <div class="service-card">
+            <h3>Construction Tracking</h3>
+            <p>Weekly aerial updates to monitor site progress and logistics.</p>
+        </div>
+        <div class="service-card">
+            <h3>Aerial Inspections</h3>
+            <p>Safe, high-resolution roof and structure checks using the Air 3S.</p>
+        </div>
+        <div class="service-card">
+            <h3>Real Estate Visuals</h3>
+            <p>Stunning 4K cinematic video to showcase high-end properties.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="contact-container">
+            <h2>Get a Quote</h2>
+            <form method="post" class="quote-form">
+                {% csrf_token %}
+                <div class="form-fields">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="submit-btn">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <style>
+        .contact-section {
+            padding: 80px 10%;
+            background: #0a0a0a; /* Deep black to match your theme */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact-container {
+            width: 100%;
+            max-width: 650px;
+            background: rgba(255, 255, 255, 0.03); /* Glassmorphism */
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .contact-container h2 {
+            text-align: center;
+            color: #ff8c00; /* Matching your orange accent */
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Targeting Django's {{ form.as_p }} structure */
+        .quote-form p {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .quote-form label {
+            font-weight: bold;
+            color: #cccccc;
+            font-size: 0.9rem;
+        }
+
+        .quote-form input, 
+        .quote-form textarea {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 12px 15px;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .quote-form input:focus, 
+        .quote-form textarea:focus {
+            outline: none;
+            border-color: #ff8c00;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #ff8c00;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+
+    <section class="gallery">
+        <img src="{% static 'main/images/drone/southlaketahoe.JPG' %}" alt="South Lake Tahoe Aerial">
+        <img src="{% static 'main/images/drone/beach.png' %}" alt="KauaiBeach Aerial">
+        <img src="{% static 'main/images/drone/church.JPG' %}" alt="Roof Inspection">
+    </section>
+
+</body>
+</html>

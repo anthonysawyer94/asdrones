@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>500 - Oops, Bro!</title>
+    <link rel="stylesheet" href="{% static 'hello/css/style.css' %}">
+</head>
+<body>
+    <section class="error-section">
+        <img src="{% static 'images/favicon.png' %}" class="x-logo">
+        <h1>500 - Bro, We Broke It!</h1>
+        <p>Whoops, our server just tripped over its own code! 😬</p>
+        <p>Give it a sec and head back to safety.</p>
+        <a href="{% url 'main_home' %}" class="btn">Take Me Home</a>
+        <p class="small-text">Our tech crew is on it... probably. 🛠️</p>
+    </section>
+</body>
+</html>
