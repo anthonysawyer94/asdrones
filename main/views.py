@@ -28,10 +28,24 @@ def home(request):
                 message=f"You have a new inquiry from {inquiry.name} ({inquiry.email}):\nIP: {inquiry.ip_address}\n\n{inquiry.message}",
                 from_email=settings.EMAIL_HOST_USER,
                 # Where you want to get the alert
-                recipient_list=['ajsawyer94@gmail.com'],
+                recipient_list=[settings.ADMIN_NOTIFICATION_EMAIL],
             )
             return redirect('main:home')  # Redirect after success
     else:
         form = ContactForm()
 
     return render(request, 'main/home.html', {'form': form})
+
+# Error Handlers
+
+
+def custom_404(request, exception):
+    return render(request, 'main/404.html', status=404)
+
+
+def custom_403(request, exception):
+    return render(request, 'main/403.html', status=403)
+
+
+def custom_500(request):
+    return render(request, 'main/500.html', status=500)

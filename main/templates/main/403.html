@@ -2,17 +2,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>403 - Nope, Bro!</title>
-    <link rel="stylesheet" href="{% static 'hello/css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Signal Lost | ASDrones</title>
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('{% static "main/images/drone/NWchicoedit.png" %}');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keeps the image still while text moves */
+
+            background-color: #0b0b0b; /* Matches your dark theme */
+            color: white;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .error-container {
+            padding: 20px;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            margin: 0;
+            background: linear-gradient(180deg, #ff9900, #cc7a00); /* Your orange */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-top: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        p {
+            color: #aaaaaa;
+            font-size: 1.1rem;
+            max-width: 500px;
+            margin: 20px auto;
+        }
+        .btn-home {
+            display: inline-block;
+            background-color: #ff9900; /* Matches your CTA button */
+            color: #000;
+            padding: 12px 30px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: transform 0.2s, background-color 0.2s;
+            margin-top: 10px;
+        }
+        .btn-home:hover {
+            background-color: #e68a00;
+            transform: scale(1.05);
+        }
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+    </style>
 </head>
-<body>
-    <section class="error-section">
-        <img src="{% static 'images/favicon.png' %}" class="x-logo">
-        <h1>403 - Bro, You Can't Be Here!</h1>
-        <p>Whoa, looks like you tried sneaking into the VIP section without a pass! 😎</p>
-        <p>Chill out and head back to the main party.</p>
-        <a href="{% url 'main_home' %}" class="btn">Take Me Home</a>
-        <p class="small-text">Or, you know, keep trying... but the bouncer's watching. 👀</p>
-    </section>
-</body>
+<div class="error-container">
+    <div class="glitch-wrapper">
+        <p class="error-code">403</p>
+    </div>
+    <h1>Restricted Airspace</h1>
+    <p>
+        Warning: You've entered a No-Fly Zone. Your credentials don't have 
+        the clearance required to hover in this area.
+    </p>
+    <a href="{% url 'main:home' %}" class="btn-home">RETURN TO BASE</a>
+</div>
 </html>

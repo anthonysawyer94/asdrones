@@ -30,3 +30,7 @@ if not settings.PRODUCTION:
                           document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
+
+handler404 = 'main.views.custom_404'
+handler403 = 'main.views.custom_403'
+handler500 = 'main.views.custom_500'
