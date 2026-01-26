@@ -31,6 +31,9 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip3 install -r requirements/dev.txt
 pip3 install -r requirements/prod.txt
 
+# *Before running Prod, get all static files in one single folder
+python3 manage.prod.py collectstatic
+
 #run django project
 python3 manage.py runserver # For Dev
 python3 manage.prod.py runserver # For Prod
