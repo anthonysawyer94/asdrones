@@ -31,6 +31,10 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip3 install -r requirements/dev.txt
 pip3 install -r requirements/prod.txt
 
+# Set up Database (this creates the db from models.py)
+python3 manage.py makemigrations
+python3 manage.prod.py migrate
+
 # *Before running Prod, get all static files in one single folder
 python3 manage.prod.py collectstatic
 
