@@ -10,6 +10,7 @@ class ProjectInquiry(models.Model):
     # Note: fix auto_auto to auto_now if you copied my previous typo!
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.name} - {self.email}"

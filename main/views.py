@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import ContactForm
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib import messages
+
+from .forms import ContactForm
 
 # Create your views here.
 
@@ -21,16 +23,17 @@ def home(request):
             else:
                 inquiry.ip_address = request.META.get('REMOTE_ADDR')
 
-            inquiry.save()  # Now save with the IP
-            # Send Email Notification
-            send_mail(
-                subject=f"New Drone Lead: {inquiry.name}",
-                message=f"You have a new inquiry from {inquiry.name} ({inquiry.email}):\nIP: {inquiry.ip_address}\n\n{inquiry.message}",
-                from_email=settings.EMAIL_HOST_USER,
-                # Where you want to get the alert
-                recipient_list=[settings.ADMIN_NOTIFICATION_EMAIL],
-            )
-            return redirect('main:home')  # Redirect after success
+            inquiry.save()
+            try:
+                send_mail(
+                    subject=f"New Drone Lead: {inquiry.name}",
+                    message=f"You have a new inquiry from {inquiry.name} ({inquiry.email}):\nIP: {inquiry.ip_address}\n\n{inquiry.message}",
+                    from_email=settings.EMAIL_HOST_USER,
+                    recipient_list=[settings.ADMIN_NOTIFICATION_EMAIL],
+                )
+            except Exception:
+                messages.error(request, "Your inquiry was saved but email notification failed. We'll still get back to you.")
+            return redirect('main:home')
     else:
         form = ContactForm()
 
