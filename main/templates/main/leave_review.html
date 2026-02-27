@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if debug %}
+        <title>[LOCAL] Leave a Review | AS Drones</title>
+    {% else %}
+        <title>Leave a Review | AS Drones</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'main/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
+    <style>
+        .review-form-section {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .review-form {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        .review-form input,
+        .review-form select,
+        .review-form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .review-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .review-form button {
+            background: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .review-form button:hover {
+            background: #0056b3;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    {% include 'main/partials/nav.html' %}
+    
+    <section class="review-form-section">
+        <a href="{% url 'main:reviews' %}" class="back-link">← Back to Reviews</a>
+        <h1>Leave a Review</h1>
+        
+        <form method="post" class="review-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Review</button>
+        </form>
+    </section>
+</body>
+</html>

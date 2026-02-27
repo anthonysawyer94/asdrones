@@ -31,6 +31,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     'debug_toolbar',
+    'django_ratelimit',
 ]
 
 APPS = [
@@ -45,6 +46,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_ratelimit.middleware.RatelimitMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
