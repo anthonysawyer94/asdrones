@@ -9,6 +9,15 @@ DEBUG = os.environ.get('DEBUG')
 PRODUCTION = False
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS').split(',')
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+
+RATELIMIT_ENABLED = False
+SILENCED_SYSTEM_CHECKS = ['django_ratelimit.E003', 'django_ratelimit.W001']
+
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 

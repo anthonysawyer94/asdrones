@@ -13,11 +13,23 @@
     <link rel="stylesheet" href="{% static 'main/css/nav.css' %}">
     <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
     <style>
-    .hero {
-        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{% static "main/images/drone/kauai.JPG" %}');
-        background-size: cover;
-        background-position: 10% center;
-        background-attachment: fixed; /* Parallax effect */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('{% static "main/images/drone/kauai.JPG" %}');
+            background-size: cover;
+            background-position: 10% center;
+            background-attachment: fixed; /* Parallax effect */
+            }
+        
+        #id_website {
+            display: none;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
 
     @media (max-width: 768px) {
@@ -56,6 +68,11 @@
     <section id="contact" class="contact-section">
         <div class="contact-container">
             <h2>Get a Quote</h2>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
             <form method="post" class="quote-form">
                 {% csrf_token %}
                 <div class="form-fields">
