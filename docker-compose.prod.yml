@@ -34,10 +34,8 @@ services:
       db:
         condition: service_healthy
     volumes:
-      - static_volume:/app/staticfiles
-      - media_volume:/app/mediafiles
+      - /var/www/asdrones/staticfiles:/app/staticfiles
+      - /var/www/asdrones/mediafiles:/app/mediafiles
 
 volumes:
   postgres_data:
-  static_volume:
-  media_volume:
