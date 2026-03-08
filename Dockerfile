@@ -19,4 +19,4 @@ RUN chmod +x manage.prod.py
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "asdrones.wsgi.prod:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "asdrones.wsgi_prod:application"]
