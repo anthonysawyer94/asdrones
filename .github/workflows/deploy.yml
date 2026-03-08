@@ -33,9 +33,9 @@ jobs:
             sudo git fetch origin main
             sudo git reset --hard origin/main
 
-            # 2. Create .env.prod if it doesn't exist
-            if [ ! -f .env.prod ]; then
-              echo "WARNING: .env.prod not found! Create it on the server before deploying."
+            # 2. Create .env if it doesn't exist
+            if [ ! -f .env ]; then
+              echo "WARNING: .env not found! Create it on the server before deploying."
             fi
 
             # 3. Use Compose to handle the build and restart
@@ -46,8 +46,8 @@ jobs:
             sudo docker image prune -f
 
             # 5. Run migrations inside the new container & collect static files
-            sudo docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate --noinput
-            sudo docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput
+            sudo docker-compose -f docker-compose.prod.yml exec -T web python manage.prod.py migrate --noinput
+            sudo docker-compose -f docker-compose.prod.yml exec -T web python manage.prod.py collectstatic --noinput
           EOF
 
       - name: Cleanup SSH key
