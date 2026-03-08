@@ -8,7 +8,8 @@ from django_ratelimit.decorators import ratelimit
 from django_ratelimit import UNSAFE
 
 from .forms import ContactForm, ReviewForm
-from .models import Review
+from .models import Review, Project
+from django.shortcuts import get_object_or_404
 
 logger = logging.getLogger(__name__)
 
@@ -84,3 +85,13 @@ def custom_500(request):
 
 def csrf_failure(request, reason=""):
     return render(request, 'main/403.html', status=403)
+
+
+def projects(request):
+    all_projects = Project.objects.filter(is_published=True).order_by('-completion_date')
+    return render(request, 'main/projects.html', {'projects': all_projects})
+
+
+def project_detail(request, slug):
+    project = get_object_or_404(Project, slug=slug, is_published=True)
+    return render(request, 'main/project_detail.html', {'project': project})

@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if debug %}
+        <title>[LOCAL] Projects | Drone Services</title>
+    {% else %}
+        <title>Projects | Drone Services</title>
+        <link rel="icon" href="{% static 'main/images/favicon.png' %}" type="image/png">
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'main/css/nav.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #cccccc;
+            min-height: 100vh;
+        }
+        .projects-header {
+            text-align: center;
+            padding: 60px 20px 40px;
+        }
+        .projects-header h1 {
+            color: #ff8c00;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 20px 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .project-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff8c00;
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.2);
+        }
+        .project-card-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .project-card-content {
+            padding: 25px;
+        }
+        .project-card-title {
+            color: #ff8c00;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        .project-card-client {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        .project-card-desc {
+            color: #cccccc;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .project-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+        .project-card-service {
+            background: rgba(255, 140, 0, 0.2);
+            color: #ff8c00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        .view-project-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 25px;
+            background: #ff8c00;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: transform 0.2s ease;
+        }
+        .view-project-btn:hover {
+            transform: scale(1.05);
+            background: #e67e00;
+        }
+        .no-projects {
+            text-align: center;
+            padding: 60px 20px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    {% include 'main/partials/nav.html' %}
+    
+    <div class="projects-header">
+        <h1>Our Projects</h1>
+        <p>Showcasing our latest drone work</p>
+    </div>
+
+    {% if projects %}
+        <div class="projects-grid">
+            {% for project in projects %}
+                <div class="project-card">
+                    <a href="{% url 'main:project_detail' project.slug %}">
+                        <img src="{{ project.main_image.url }}" alt="{{ project.title }}" class="project-card-image">
+                    </a>
+                    <div class="project-card-content">
+                        <h3 class="project-card-title">{{ project.title }}</h3>
+                        {% if project.client_name %}
+                            <p class="project-card-client">Client: {{ project.client_name }}</p>
+                        {% endif %}
+                        <p class="project-card-desc">{{ project.description|truncatewords:25 }}</p>
+                        <div class="project-card-meta">
+                            {% if project.service_type %}
+                                <span class="project-card-service">{{ project.get_service_type_display }}</span>
+                            {% endif %}
+                            {% if project.completion_date %}
+                                <span>{{ project.completion_date|date:"M Y" }}</span>
+                            {% endif %}
+                        </div>
+                        <a href="{% url 'main:project_detail' project.slug %}" class="view-project-btn">View Project</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="no-projects">
+            <p>No projects to display yet. Check back soon!</p>
+        </div>
+    {% endif %}
+
+    {% include 'main/partials/footer.html' %}
+</body>
+</html>

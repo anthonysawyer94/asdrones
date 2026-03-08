@@ -1,0 +1,55 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Decode SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ec2_key.pem ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }} << 'EOF'
+            cd /var/www/asdrones
+
+            # 1. Update the code on the server
+            sudo git fetch origin main
+            sudo git reset --hard origin/main
+
+            # 2. Create .env.prod if it doesn't exist
+            if [ ! -f .env.prod ]; then
+              echo "WARNING: .env.prod not found! Create it on the server before deploying."
+            fi
+
+            # 3. Use Compose to handle the build and restart
+            sudo docker-compose -f docker-compose.prod.yml down
+            sudo docker-compose -f docker-compose.prod.yml up -d --build
+
+            # 4. Clean up old, unused images to save disk space on AWS
+            sudo docker image prune -f
+
+            # 5. Run migrations inside the new container & collect static files
+            sudo docker-compose -f docker-compose.prod.yml exec -T web python manage.py migrate --noinput
+            sudo docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput
+          EOF
+
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ec2_key.pem
