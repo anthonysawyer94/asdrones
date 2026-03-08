@@ -7,7 +7,7 @@
         <li><a href="{% url 'main:home' %}">Home</a></li>
         <li><a href="{% url 'main:projects' %}">Projects</a></li>
         {% comment %}<li><a href="#services">Services</a></li> {% endcomment %}
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="{% url 'main:home' %}#contact">Contact</a></li>
       </ul>
     </div>
   </nav>
