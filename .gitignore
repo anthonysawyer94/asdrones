@@ -1,8 +1,12 @@
 venv/
 env/
 .env
+.env.*
+!.env.prod.example
 *.sqlite3
 __pycache__/
 *.pyc
 *.pyc[cod]
 staticfiles/
+mediafiles/
+*.log

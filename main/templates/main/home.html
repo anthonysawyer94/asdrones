@@ -47,7 +47,10 @@
     <header class="hero">
         <h1>Intelligence from Above</h1>
         <p>High-resolution site tracking and aerial inspections.</p>
-        <a href="#contact" class="btn-quote">Get a Quote</a>
+        <div class="hero-buttons">
+            <a href="{% url 'main:projects' %}" class="btn-projects">Our Projects</a>
+            <a href="#contact" class="btn-quote">Get a Quote</a>
+        </div>
     </header>
 
     <section class="services">

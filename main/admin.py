@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ProjectInquiry, Review
+from .models import ProjectInquiry, Review, Project, ProjectImage
 
 
 @admin.register(ProjectInquiry)
@@ -18,3 +18,21 @@ class ReviewAdmin(admin.ModelAdmin):
     def approve_reviews(self, request, queryset):
         queryset.update(is_approved=True)
     approve_reviews.short_description = "Approve selected reviews"
+
+
+class ProjectImageInline(admin.TabularInline):
+    model = ProjectImage
+    extra = 1
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'client_name', 'service_type', 'is_published', 'completion_date', 'created_at')
+    list_filter = ('is_published', 'service_type', 'completion_date')
+    search_fields = ('title', 'client_name', 'description')
+    inlines = [ProjectImageInline]
+    fieldsets = (
+        (None, {
+            'fields': ('title', 'slug', 'client_name', 'description', 'service_type', 'main_image', 'completion_date', 'is_published')
+        }),
+    )
