@@ -24,8 +24,9 @@ services:
     ports:
       - "8001:8000"
     env_file:
-      - .env.local
+      - .env.dev
     environment:
+      - DJANGO_SETTINGS_MODULE=asdrones.conf.dev
       - DATABASE_URL=postgres://asdrones:${DB_PASSWORD}@db:5432/asdrones
       - REDIS_URL=redis://redis:6379/1
     depends_on:
