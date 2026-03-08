@@ -1,7 +1,10 @@
-from .common import *
+import dj_database_url
 import os
 
 from dotenv import load_dotenv
+
+from .common import *
+
 load_dotenv()
 
 # Cache configuration
@@ -27,7 +30,8 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 PRODUCTION = not DEBUG
 SECRET_KEY = os.environ.get('PRODUCTION_KEY')
 
-allowed_hosts = os.environ.get('ALLOWED_HOSTS') or os.environ.get('PRODUCTION_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+allowed_hosts = os.environ.get('ALLOWED_HOSTS') or os.environ.get(
+    'PRODUCTION_ALLOWED_HOSTS', 'localhost,127.0.0.1')
 ALLOWED_HOSTS = [h.strip() for h in allowed_hosts.split(',') if h.strip()]
 
 # Email configuration (only set if EMAIL_HOST is provided)
@@ -45,7 +49,6 @@ else:
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-import dj_database_url
 
 database_url = os.environ.get('DATABASE_URL')
 if database_url:
