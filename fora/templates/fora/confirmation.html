@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Consultation Requested{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow text-center">
+        <div class="card-body p-5">
+          <div class="mb-4">
+            <span style="font-size: 4rem;">&#10003;</span>
+          </div>
+          <h1 class="card-title">Thank You, {{ consultation.name }}!</h1>
+          <p class="lead">Your consultation request has been submitted.</p>
+          <p>
+            <strong>Date:</strong> {{ consultation.date|date:"l, F j, Y" }}<br>
+            <strong>Time:</strong> {{ consultation.time|time:"g:i A" }}<br>
+            <strong>Duration:</strong> 30 minutes
+          </p>
+          <p class="text-muted">
+            You'll receive an email confirmation at <strong>{{ consultation.email }}</strong>
+            once your appointment is approved. Please allow up to 24 hours for a response.
+          </p>
+          <a href="{% url 'fora:book' %}" class="btn btn-primary mt-3">Book Another</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
